@@ -33,12 +33,30 @@ class App extends React.Component {
     `;
 
     // These variables are optional, leave empty for now
-    const variables = {};
+    // const variables = {};
     // We call the method here to execute our async function
-    this.getAnime(query, variables)
+    // this.getAnime(query, variables)
+    // just for kicks, let's do this using fetch as  well
+    fetch('https://graphql.anilist.co/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: query,
+        }),
+      })
+      .then(response => {
+        return response.json()
+      })
+      .then(responseAsJson => {
+        this.setState({ isLoaded: true, items: responseAsJson.data.Page.media })
+      })
   }
 
   // arrow function is now the preferred way to write functions inside the class
+  // async/await is just a better way of writing the promise based code
+  // it helps you write and visualise asyncronous code in sync manner
   getAnime = async (query, variables) => {
     try {
       const response = await axios.post('https://graphql.anilist.co', {
@@ -49,6 +67,9 @@ class App extends React.Component {
       // Log the response so we can look at it in the console
       console.log(response.data)
 
+      // either this would be set into the state
+      // or the error would be set into the state
+      // whenever that happens, the render function is called
       // Set the data to the state
       this.setState(() => ({
         isLoaded: true,
@@ -68,7 +89,6 @@ class App extends React.Component {
     } else if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
-
       return (
       <div className="grid">
         {items.map(item => (
