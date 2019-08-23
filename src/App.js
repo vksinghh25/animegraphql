@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import axios from 'axios';
-import SingleGridItemComponet from './singlegriditemcomponent.js';
+import Details  from './Details.js';
+import SingleGridComponent from './SingleGridComponent.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -9,7 +10,10 @@ class App extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      items: [],
+      currentPage: 'grid',
+      selectedTitle: '',
+      selectedTitleUrl: ''
     }
   }
 
@@ -82,21 +86,33 @@ class App extends React.Component {
     }
   }
 
+  clickHandler = (title, url) => {
+    this.setState({currentPage: 'details', selectedTitle: title, selectedTitleUrl: url});
+  }
+
   render() {
-    const { error, isLoaded, items } = this.state;
-    if (error) {
-      return <div>{error.message}</div>;
-    } else if (!isLoaded) {
-      return <div>Loading...</div>;
-    } else {
-      return (
-      <div className="grid">
-        {items.map(item => (
-          <SingleGridItemComponet key={item.id} image={item.coverImage.large} name={item.title.english} />
-        ))}
-      </div>
-    );
+    const { error, isLoaded, items, currentPage, selectedTitle, selectedTitleUrl } = this.state;
+
+    if(currentPage == 'grid') {
+      if (error) {
+        return <div>{error.message}</div>;
+      } else if (!isLoaded) {
+        return <div>Loading...</div>;
+      } else {
+        return (
+        <div className="grid">
+          {items.map(item => (
+            <SingleGridComponent key={item.id} image={item.coverImage.large}
+                      name={item.title.english}
+                      onClick={this.clickHandler} />
+          ))}
+        </div>
+      );
+      }
+    } else if(currentPage == 'details') {
+      return <Details title={selectedTitle} url={selectedTitleUrl}/>;
     }
+
   }
 }
 
