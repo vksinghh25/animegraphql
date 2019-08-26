@@ -7,7 +7,7 @@ class SingleGridComponent extends React.Component {
         <div><b> {this.props.name} </b></div>
         <img className="grid__img" alt={this.props.id}
                   src={this.props.image}
-                  onClick={() => this.props.onClick(this.props.name, this.props.image)} />
+                  onClick={() => this.props.onClick(this.props.name, this.props.image, this.props.id)} />
       </div>
     );
   }

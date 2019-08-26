@@ -54,7 +54,7 @@ class App extends React.Component {
         return response.json()
       })
       .then(responseAsJson => {
-        this.setState({ isLoaded: true, items: responseAsJson.data.Page.media })
+        this.setState({ isLoaded: true, items: responseAsJson.data.Page.media });
       })
   }
 
@@ -79,21 +79,20 @@ class App extends React.Component {
         isLoaded: true,
         items: response.data.data.Page.media
       }));
-
     } catch (error) {
       // If there's an error, set the error to the state
       this.setState(() => ({ error }))
     }
   }
 
-  clickHandler = (title, url) => {
-    this.setState({currentPage: 'details', selectedTitle: title, selectedTitleUrl: url});
+  clickHandler = (title, url, id) => {
+    this.setState({currentPage: 'details', selectedTitle: title, selectedTitleUrl: url, selectedId: id});
   }
 
   render() {
-    const { error, isLoaded, items, currentPage, selectedTitle, selectedTitleUrl } = this.state;
+    const { error, isLoaded, items, currentPage, selectedTitle, selectedTitleUrl, selectedId } = this.state;
 
-    if(currentPage == 'grid') {
+    if(currentPage === 'grid') {
       if (error) {
         return <div>{error.message}</div>;
       } else if (!isLoaded) {
@@ -104,13 +103,14 @@ class App extends React.Component {
           {items.map(item => (
             <SingleGridComponent key={item.id} image={item.coverImage.large}
                       name={item.title.english}
+                      id={item.id}
                       onClick={this.clickHandler} />
           ))}
         </div>
       );
       }
-    } else if(currentPage == 'details') {
-      return <Details title={selectedTitle} url={selectedTitleUrl}/>;
+    } else if(currentPage === 'details') {
+      return <Details title={selectedTitle} url={selectedTitleUrl} id={selectedId}/>;
     }
 
   }
