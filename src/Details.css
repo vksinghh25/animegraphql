@@ -1,21 +1,38 @@
-.split {
-  height: 100%;
-  width: 50%;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  overflow-x: hidden;
-  padding-top: 20px;
+html {
+  height:100%
 }
 
-/* Control the left side */
+body {
+  height:100%;
+}
+
+.intro {
+  height:100%;
+}
+
 .left {
-  left: 0;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  background-color:#3d231b;
+  height : 100%;
+  color : #FFF;
 }
-
-/* Control the right side */
 .right {
-  right: 0;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  background-color:#FFF;
+  height : 100%;
+  color : #3d231b;
+}
+@media (max-width: 300px) {
+  .left{
+    width:100%
+  }
+  .right{
+    width:100%
+  }
 }
 
 .centered {
@@ -30,7 +47,17 @@
   top: 50%;
 }
 
-img {
+.badge {
+  margin: 5px
+}
+
+.tiny {
+  width: 110px;
+  height: 110px;
+  margin: 1px
+}
+
+.stretch {
   width: stretch;
   height: stretch;
 }
