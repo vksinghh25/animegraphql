@@ -7,7 +7,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
       isLoaded: false,
       items: [],
       currentPage: 'grid',
@@ -102,7 +101,6 @@ class App extends React.Component {
 
   backHandler = () => {
     this.setState({
-        error: null,
         isLoaded: false,
         items: [],
         currentPage: 'grid',
@@ -112,27 +110,31 @@ class App extends React.Component {
     );
   }
 
-  clickHandler = (title, url, id) => {
+  imageClickHandler = (title, url, id) => {
+    // now we want to open the the Details page
+    // also note that this is in a way touting, based on the value of currentPage
+    // this sets the state and the render method is called again
     this.setState({currentPage: 'details', selectedTitle: title, selectedTitleUrl: url, selectedId: id});
   }
 
   render() {
-    const { error, isLoaded, items, currentPage, selectedTitle, selectedTitleUrl, selectedId } = this.state;
+    const { isLoaded, items, currentPage, selectedTitle, selectedTitleUrl, selectedId } = this.state;
 
     if(currentPage === 'grid') {
-      if (error) {
-        return <div>{error.message}</div>;
-      } else if (!isLoaded) {
+      if (!isLoaded) {
         return <div>Loading...</div>;
       } else {
         return (
+        <div>
+        <h1 className="centered"> AniList </h1>
         <div className="grid">
           {items.map(item => (
             <SingleGridComponent key={item.id} image={item.coverImage.large}
                       name={item.title.english}
                       id={item.id}
-                      onClick={this.clickHandler} />
+                      onClick={this.imageClickHandler} />
           ))}
+        </div>
         </div>
       );
       }
