@@ -99,6 +99,8 @@ class App extends React.Component {
     }
   }
 
+  // method to be called when on the Details page, you try to get back to the grid Page
+  // clear all the fields and this once again re-renders the component
   backHandler = () => {
     this.setState({
         isLoaded: false,
@@ -110,10 +112,12 @@ class App extends React.Component {
     );
   }
 
+  // method to be called when an image is clicked
   imageClickHandler = (title, url, id) => {
     // now we want to open the the Details page
-    // also note that this is in a way touting, based on the value of currentPage
+    // also note that this is in a way routing, based on the value of currentPage
     // this sets the state and the render method is called again
+    // since we are setting the state, the component is going to re-render
     this.setState({currentPage: 'details', selectedTitle: title, selectedTitleUrl: url, selectedId: id});
   }
 
@@ -139,6 +143,7 @@ class App extends React.Component {
       );
       }
     } else if(currentPage === 'details') {
+      // rende
       return <Details title={selectedTitle} url={selectedTitleUrl} id={selectedId} backHandler={this.backHandler}/>;
     }
 

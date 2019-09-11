@@ -77,7 +77,8 @@ class Details extends React.Component {
   }
 
   render() {
-    console.log("Calling Details with id : " + this.props.id);
+    const { item } = this.state;
+
     if (!this.state.isLoaded) {
       return <div>Loading...</div>;
     }
@@ -87,11 +88,11 @@ class Details extends React.Component {
           <Row>
             <div className="centered vertically">
               <h1> {this.props.title} </h1>
-              <p> {this.state.item[0] && 'Score: ' + this.state.item[0].meanScore + '/100'} </p>
-              <p> {this.state.item[0] && this.state.item[0].description} </p>
-              <p><b> {this.state.item[0] && 'Country of Origin:  ' + this.state.item[0].countryOfOrigin} </b></p>
+              <p> {item[0] && 'Score: ' + item[0].meanScore + '/100'} </p>
+              <p> {item[0] && item[0].description} </p>
+              <p><b> {item[0] && 'Country of Origin:  ' + item[0].countryOfOrigin} </b></p>
               <p>
-                {this.state.item[0] && this.state.item[0].genres.map(genre => (
+                {item[0] && item[0].genres.map(genre => (
                   <span key={genre} className="badge badge-secondary">{genre}</span>
                 ))}
               </p>
